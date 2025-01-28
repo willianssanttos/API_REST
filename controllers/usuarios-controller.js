@@ -39,7 +39,7 @@ exports.postLogin = async (req, res, next) => {
         const results = await mysql.execute(query, [req.body.email]); 
 
         if (results.length < 1) {
-            return res.status(401).send({ mensagem: 'Email ou senha !' })
+            return res.status(401).send({ mensagem: 'Email ou senha incorreta!' })
         }
 
         if (await bcrypt.compareSync(req.body.senha, results[0].senha)){
@@ -52,11 +52,11 @@ exports.postLogin = async (req, res, next) => {
                     expiresIn: "1h"
                 });
                 return res.status(200).send({ 
-                    mensagem: 'Email ou senha !',
+                    mensagem: 'Email ou senha incorreta!',
                     token: token 
                 });
             }
-            return res.status(401).send({ mensagem: 'Email ou senha !' });
+            return res.status(401).send({ mensagem: 'Email ou senha incorreta!' });
     } catch (error) {
         return res.status(500).send({ mensagem: 'Email ou senha incorreta!' });
     }
