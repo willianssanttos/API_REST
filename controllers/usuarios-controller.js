@@ -52,7 +52,7 @@ exports.postLogin = async (req, res, next) => {
                     expiresIn: "1h"
                 });
                 return res.status(200).send({ 
-                    mensagem: 'Email ou senha!',
+                    mensagem: 'Email ou senha incorreta!',
                     token: token 
                 });
             }
