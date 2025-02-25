@@ -30,9 +30,9 @@ exports.postProduto = async (req, res, next) => {
 
     try {
         const query = 'INSERT INTO produtos (nome, preco, imagem_produto, id_categoria) VALUES (?,?,?,?)';
-            const result = await mysql.execute(query, 
-                [ req.body.nome, 
-                  req.body.preco, 
+            const result = await mysql.execute(query,
+                [ req.body.nome,
+                  req.body.preco,
                   req.file.path,
                   req.body.id_categoria
                 ]);
@@ -48,7 +48,7 @@ exports.postProduto = async (req, res, next) => {
                         request: {
                             tipo: 'GET',
                             decricao: 'Retorna todos os produtos',
-                            url: process.env.URL_API + 'produtos'                        
+                            url: process.env.URL_API + 'produtos'
                         }
                     }
                 }

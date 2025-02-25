@@ -7,7 +7,7 @@ exports.getPedidos = async (req, res, next) => {
                             pedidos.quantidade,
                             produtos.id_produto,
                             produtos.nome,
-                            produtos.preco  
+                            produtos.preco
                         FROM pedidos
                     INNER JOIN produtos
                 ON produtos.id_produto = pedidos.id_produto;`;
@@ -22,7 +22,7 @@ exports.getPedidos = async (req, res, next) => {
                         id_produto: pedido.id_produto,
                         nome: pedido.nome,
                         preco: pedido.preco
-                    },                          
+                    },
                     request: {
                         tipo: 'GET',
                         descricao: 'Retorna os detalhes de um pedido específico',
@@ -61,7 +61,7 @@ exports.postPedidos = async (req, res, next) => {
                 request: {
                     tipo: 'GET',
                     decricao: 'Retorna todos os pedidos',
-                    url: process.env.URL_API + 'pedido'                               
+                    url: process.env.URL_API + 'pedido'
                 }
             }
         }
@@ -125,5 +125,35 @@ exports.deletePedidos = async (req, res, next) => {
         return res.status(202).send({ response });
     } catch (error) {
         if (error) { return res.status(500).send({ error: error })}
+    }
+};
+
+exports.createPix = async (req, res, next) => {
+    try{
+        const data = JSON.stringify({
+            "calendario": { "expiracao": 3600 },
+            "devedor": {
+                "cpf": req.body.payee.cpf,
+                "nome": process.body.payee.name
+            },
+            "valor": { "original": req.body.value },
+            "chave": process.env.CHAVE_PIX,
+            "solicitacaoPagador": req.body.description
+        });
+
+        txId = new randexp(/^[a-zA-Z0-9]{26,35}$/).gen();
+
+        const config = {
+            method: 'PUT',
+            url: ``,
+            headers: { 
+                Authorization: 'Bearer' + res.locals.accessToken,
+                'Content-Type': 'application/json'
+            },
+            httpsAgent: res.locals.agent,
+            data: data
+        }
+    } catch(error){
+        return res.status(500).send({ error: error });
     }
 };
